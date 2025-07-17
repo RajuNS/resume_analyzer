@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analyzer Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m10 13-2 2 2 2"/><path d="m14 13 2 2-2 2"/></svg>
+            <h1>Resume Analyzer Pro</h1>
+            <p>Get an instant, data-driven analysis of how well a resume matches a job description.</p>
+        </div>
+        
+        <form id="analyzer-form" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="resume">1. Upload Resume</label>
+                    <label for="resume" class="file-input-label">
+                        <span id="file-name">Click to select a file...</span>
+                        <span class="file-btn">Browse</span>
+                    </label>
+                    <input type="file" id="resume" name="resume" accept=".pdf,.docx" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jd">2. Paste Job Description</label>
+                    <textarea id="jd" name="jd" rows="11" placeholder="Paste the job description here to analyze..." required></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" id="submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Analyze Now
+            </button>
+        </form>
+        
+        <div id="loader" class="loader-container" style="display: none;">
+            <div class="loader"></div>
+            <p>Analyzing... this may take a moment.</p>
+        </div>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <div id="results" class="results-container" style="display: none;">
+            <h2>Analysis Report</h2>
+            <div class="results-grid">
+                <div class="score-card main-score-card">
+                    <h3>Overall Match Score</h3>
+                    <div class="score-circle-container">
+                        <div id="score-circle" class="score-circle" role="progressbar" aria-valuenow="0" style="--value: 0;"></div>
+                        <div id="final-score" class="score-text">0%</div>
+                    </div>
+                    <div class="sub-scores">
+                        <p>Keyword Match: <strong id="skill-score">0%</strong></p>
+                        <p>Context Similarity: <strong id="similarity-score">0%</strong></p>
+                    </div>
+                </div>
+                <div class="detail-card matched-card">
+                    <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Matched Skills</h4>
+                    <ul id="matched-skills"></ul>
+                </div>
+                <div class="detail-card missing-card">
+                    <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Missing Skills</h4>
+                    <ul id="missing-skills"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
